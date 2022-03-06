@@ -1,4 +1,4 @@
-# vite-staking
+# Beefstake
 
 Staking pools distribute a chosen native Vite token as a reward to users staking another chosen native Vite token. The total reward rate is fixed, and staking users earn rewards proportional to the amount they stake. Contract can be found [here](https://github.com/weserickson/vite-staking-pools).
 
