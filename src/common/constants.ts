@@ -14,7 +14,7 @@ export const Networks: Network[] = [
     id: 1,
     networkId: 1,
     name: 'MAINNET',
-    rpcUrl: 'wss://node.vite.net/gvite/ws',
+    rpcUrl: 'wss://node-vite.thomiz.dev/ws',
     connectorUrl: 'wss://viteconnect.thomiz.dev'
   },
   {
