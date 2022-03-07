@@ -3,20 +3,20 @@
 Staking pools distribute a chosen native Vite token as a reward to users staking another chosen native Vite token. The total reward rate is fixed, and staking users earn rewards proportional to the amount they stake. Contract can be found [here](https://github.com/weserickson/vite-staking-pools).
 
 <h1 align="center">
-	<img src="assets/gui.png" alt="VITE Staking Pools">
+	<img src="assets/gui.png" alt="BeefStake">
 </h1>
 
 ## Setup
 
 First, download & install [Node](https://nodejs.org/en/) v14+ and [Yarn](https://yarnpkg.com/getting-started/install).
 
-To install all dependencies just run the following command in the `app` folder:
+To install all dependencies just run the following command:
 
 ```bash
 yarn install
 ```
 
-- create .env file based on [.env.example](./app/.env.example)
+- create .env file based on [.env.example](./.env.example)
 
 ### Start
 

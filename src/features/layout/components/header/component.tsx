@@ -43,7 +43,7 @@ export const Header: React.FC = (props: any) => {
     <Root>
       <AppBar position="static" color="primary">
         <Toolbar>
-          <img src={"./icon_white.png"} alt="logo" width="30" />
+          <img src={"./icon.png"} alt="logo" width="30" />
           <TitleTypography variant="h6">
             {CommonConstants.APP_NAME}
           </TitleTypography>

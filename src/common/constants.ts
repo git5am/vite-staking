@@ -1,10 +1,10 @@
 import { GenericType, Network, PoolFilterValues, PoolSortType, Token } from "../util/types"
 
 export const CommonConstants = {
-  APP_NAME: 'VITE Staking Pools',
+  APP_NAME: 'BeefStake',
   WEB_WALLET_STORAGE_SPACE: 'VSP_WEB_WALLET',
   SESSION_WALLET_STORAGE_SPACE: 'VSP_SESSION_WALLET',
-  POOLS_CONTRACT_ADDRESS: 'vite_901762159a2e39b79dc23c8a498fcd8c5a7b359ea616f00993',
+  POOLS_CONTRACT_ADDRESS: 'vite_dcd10d6c5e72d616d5352c891040b49f5b333cfc039e40d5b6',
   VITE_TOKEN_ID: 'tti_5649544520544f4b454e6e40',
   REWARD_FACTOR: 1e36 // 10^36 = new BigNumber(10).pow(36)
 }
