@@ -52,7 +52,7 @@ export const PoolListItem: React.FC<Props> = (props: Props) => {
 
   useEffect(() => {
     let interval = setInterval(() => {
-      setCanStake(!!props.pool && !!props.account && networkManager.networkHeight.gte(props.pool.startBlock));
+      setCanStake(!!props.pool && !!props.account);
     }, 500);
     return () => {
       clearInterval(interval);
