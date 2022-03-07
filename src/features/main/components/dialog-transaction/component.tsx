@@ -8,6 +8,7 @@ const Transition = React.forwardRef(function Transition(
   props: TransitionProps & { children?: React.ReactElement<any, any> },
   ref: React.Ref<unknown>,
 ) {
+  // @ts-ignore
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
