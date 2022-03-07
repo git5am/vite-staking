@@ -7,13 +7,13 @@ import { getEmitter, IGlobalEmitter } from "../util/emitter.util";
 import { Ensure } from "../util/ensure";
 import { getLogger } from "../util/logger";
 import { MomentUtil } from "../util/moment.util";
-import { ContractPool, ContractPoolUserInfo, Pool, PoolUserInfo, Token } from "../util/types";
+import { ContractPool, ContractPoolUserInfo, Network, Pool, PoolUserInfo, Token } from "../util/types";
 import { getWalletManager, WalletAccount, WalletManager } from "../wallet";
 
 const logger = getLogger();
 
 export interface IDataSource {
-  initAsync(): Promise<void>;
+  initAsync(network: Network): Promise<void>;
   dispose(): void;
   getAccountBalanceAsync(_account: string): Promise<BigNumber>;
   getNetworkBlockHeightAsync(): Promise<BigNumber>;
@@ -44,10 +44,10 @@ export abstract class BaseDataSource implements IDataSource {
     this._tokens = new Map<string, Token>();
   }
 
-  async initAsync(): Promise<void> {
+  async initAsync(network: Network): Promise<void> {
     logger.info("Init BaseDataSource")();
     this._moment = new MomentUtil();
-    await this.initAsyncProtected();
+    await this.initAsyncProtected(network);
   }
 
   dispose(): void {
@@ -164,7 +164,7 @@ export abstract class BaseDataSource implements IDataSource {
     }
   }
 
-  protected abstract initAsyncProtected(): Promise<void>;
+  protected abstract initAsyncProtected(network: Network): Promise<void>;
 
   protected abstract disposeProtected(): void;
 

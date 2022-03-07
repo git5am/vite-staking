@@ -18,7 +18,8 @@ export type Network = {
   networkId: number
   name: string
   rpcUrl: string
-  connectorUrl: string
+  connectorUrl: string,
+  contract: string
 }
 
 export type Token = {

@@ -5,7 +5,7 @@ import { CachedFunctionCall } from "../util/cache";
 import { CommonUtil } from "../util/common.util";
 import { BrowserFileUtil, FileUtil } from "../util/file.util";
 import { getLogger } from "../util/logger";
-import { Contract, ContractPool, ContractPoolUserInfo, Pool, PoolUserInfo, VmLog, VmLogEvent } from "../util/types";
+import { Contract, ContractPool, ContractPoolUserInfo, Network, Pool, PoolUserInfo, VmLog, VmLogEvent } from "../util/types";
 import { BaseDataSource } from "./base.datasource";
 
 const logger = getLogger();
@@ -29,10 +29,10 @@ export class ViteDataSource extends BaseDataSource {
     logger.info("ViteDataSource loaded")();
   }
 
-  protected async initAsyncProtected(): Promise<void> {
+  protected async initAsyncProtected(network: Network): Promise<void> {
     const contract = await this._fileUtil.readFileAsync('./assets/contracts/vite_staking_pools.json');
     this._contract = JSON.parse(contract) as Contract;
-    this._contract.address = CommonConstants.POOLS_CONTRACT_ADDRESS;
+    this._contract.address = network.contract
     logger.info(`Contract ${this._contract?.contractName} loaded`)();
     this._listener = await this._client.createAddressListenerAsync(this._contract.address);
     this._listener.on((results: any[]) => {

@@ -24,7 +24,7 @@ export class CommonContext {
         this._datasource = getViteDataSource();
         break;
     }
-    await this._datasource.initAsync();
+    await this._datasource.initAsync(network);
   }
 
   dispose(): void {
