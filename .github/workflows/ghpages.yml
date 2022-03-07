@@ -26,6 +26,7 @@ jobs:
       - name: Install and Build
         run: |
           npm install
+          node setupenv.js
           npm run build
       - name: Deploy to gh-pages
         uses: JamesIves/github-pages-deploy-action@4.0.0
