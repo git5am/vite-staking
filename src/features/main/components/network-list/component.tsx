@@ -39,7 +39,9 @@ export const NetworkList: React.FC = () => {
         >
           {networks.map(e => {
             return (
-              <MenuItem key={e.id.toString()} value={e.id.toString()}>{e.name}</MenuItem>
+              <MenuItem key={e.id.toString()} value={e.id.toString()} sx={{
+                color: "white"
+              }}>{e.name}</MenuItem>
             )
           })}
         </Select>
