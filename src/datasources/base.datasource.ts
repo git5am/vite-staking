@@ -82,6 +82,7 @@ export abstract class BaseDataSource implements IDataSource {
       .div(usdStakingAmount)
       .div(totalTime)
       .times(secondsInYear)
+      .times(100)
       return !apr.isFinite() || apr.isNaN() ? undefined : apr;
     } catch (error) {
       logger.error(error)();
