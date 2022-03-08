@@ -33,6 +33,7 @@ export abstract class BaseDataSource implements IDataSource {
   private readonly _vitexClient: VitexClient;
   private readonly _coinUtil: CoinUtil;
   private readonly _tokens: Map<string, Token>;
+  private readonly _tokensURL: Map<string, string>;
   private _moment: MomentUtil = new MomentUtil();
 
   constructor() {
@@ -42,6 +43,9 @@ export abstract class BaseDataSource implements IDataSource {
     this._vitexClient = getVitexClient();
     this._coinUtil = getCoinUtil();
     this._tokens = new Map<string, Token>();
+    this._tokensURL = new Map<string, string>([
+      ["tti_22d0b205bed4d268a05dfc3c", "https://vitamincoin.org/home"]
+    ])
   }
 
   async initAsync(network: Network): Promise<void> {
@@ -118,7 +122,7 @@ export abstract class BaseDataSource implements IDataSource {
           originalSymbol: result.originalSymbol,
           decimals: result.tokenDecimals,
           iconUrl: result.urlIcon,
-          url: "https://coinmarketcap.com/currencies/" + this._coinUtil.mapCoinMarketCapName(result.name)
+          url: this._tokensURL.get(id) || "https://coinmarketcap.com/currencies/" + this._coinUtil.mapCoinMarketCapName(result.name)
         }
         this._tokens.set(id, token);
         return token;
