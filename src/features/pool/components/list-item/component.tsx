@@ -40,6 +40,12 @@ export const PoolListItem: React.FC<Props> = (props: Props) => {
   const emitter = getEmitter();
   const poolService = getPoolService();
   const networkManager = getNetworkManager();
+  const [expanded, setExpanded] = useState<boolean>(() => {
+    if(!props.pool)return true
+    return localStorage.getItem(
+      `${networkManager.getNetwork()?.contract}.${props.pool?.id}.expanded`
+    ) !== "false"
+  })
 
   useEffect(() => {
     if (props.pool) {
@@ -112,7 +118,14 @@ export const PoolListItem: React.FC<Props> = (props: Props) => {
 
   return (
     <>
-      <Accordion defaultExpanded>
+      <Accordion expanded={expanded} onChange={(ev, expanded) => {
+        if(!props.pool)return
+        localStorage.setItem(
+          `${networkManager.getNetwork()?.contract}.${props.pool.id}.expanded`,
+          String(expanded)
+        )
+        setExpanded(expanded)
+      }}>
         <AccordionSummary sx={{ backgroundColor: "rgba(217, 217, 217, 0.1)" }} expandIcon={<ExpandMoreIcon />}>
           <Grid container justifyContent="center" alignItems="center" spacing={2}>
             <Grid item>
