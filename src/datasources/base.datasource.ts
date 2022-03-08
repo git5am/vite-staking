@@ -72,8 +72,12 @@ export abstract class BaseDataSource implements IDataSource {
       const rewardTokenPrice = await this._coingeckoClient.getTokenPriceUSDAsync(pool.rewardToken.name);
       const totalTime = pool.endBlock.minus(pool.startBlock);
       const secondsInYear = new BigNumber(365 * 24 * 60 * 60);
-      const toPercent = new BigNumber(100);
-      const apr = rewardTokenPrice.times(pool.totalRewards).dividedBy(stakingTokenPrice.times(pool.totalStaked).times(totalTime)).times(secondsInYear).times(toPercent);
+      const usdRewardAmount = rewardTokenPrice.times(pool.totalRewards);
+      const usdStakingAmount = stakingTokenPrice.times(pool.totalStaked);
+      const apr = new BigNumber(usdRewardAmount)
+      .div(usdStakingAmount)
+      .div(totalTime)
+      .times(secondsInYear)
       return !apr.isFinite() || apr.isNaN() ? undefined : apr;
     } catch (error) {
       logger.error(error)();
