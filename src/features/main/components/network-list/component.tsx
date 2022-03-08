@@ -1,4 +1,4 @@
-import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, styled } from '@mui/material';
+import { FormControl, MenuItem, Select, SelectChangeEvent, styled } from '@mui/material';
 import React, { useState } from 'react';
 import { getNetworkManager } from '../../../../common/network';
 import { Network } from '../../../../util/types';
@@ -6,7 +6,7 @@ import { Network } from '../../../../util/types';
 const NetworksFormControl = styled(FormControl)(
   ({ theme }) => ({
     margin: theme.spacing(1),
-    '& .MuiSelect-root': {
+    '& > div > div': {
       color: theme.palette.common.white
     },
     '& .MuiSvgIcon-root': {
@@ -30,18 +30,16 @@ export const NetworkList: React.FC = () => {
   return (
     networks.length > 0 ? (
       <NetworksFormControl variant="outlined" size="small">
-        <InputLabel id="select-network-label"></InputLabel>
         <Select
           labelId="select-network-label"
           id="select-network-label"
           value={network?.id.toString()}
           onChange={handleChange}
+          className="MuiSelect-root"
         >
           {networks.map(e => {
             return (
-              <MenuItem key={e.id.toString()} value={e.id.toString()} sx={{
-                color: "white"
-              }}>{e.name}</MenuItem>
+              <MenuItem key={e.id.toString()} value={e.id.toString()}>{e.name}</MenuItem>
             )
           })}
         </Select>
