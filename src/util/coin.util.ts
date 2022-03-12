@@ -10,7 +10,16 @@ export class CoinUtil {
       ["https://static.vite.net/token-profile-1257137467/icon/3c231a8309999ad226afa097488a6158.png", "./assets/coins/dai.png"]
     ]);
     this._coinMarketCapMap = new Map<string, string>();
-    this._coingeckoMap = new Map<string, string>();
+    this._coingeckoMap = new Map<string, string>([
+      [
+        "Avalanche",
+        "avalanche-2"
+      ],
+      [
+        "Terra",
+        "terra-luna"
+      ]
+    ]);
   }
 
   mapIconUrl(iconUrl?: Maybe<string>): string {
