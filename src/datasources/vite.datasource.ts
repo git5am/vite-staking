@@ -100,22 +100,33 @@ export class ViteDataSource extends BaseDataSource {
     const result = await this._client.callOffChainMethodAsync(this.contract.address, this.getOffchainMethodAbi("getPoolInfo"), this.contract.offChain, [_id]);
     const p = this.objectFromEntries(result) as ContractPool;
     const pool = await this.toPoolAsync(_id, p);
-    pool.apr = await this.getAprAsync(pool);
-    pool.userInfo = await this.getPoolUserInfoAsync(_id, _account);
+    const [
+      apr,
+      userInfo
+    ] = await Promise.all([
+      this.getAprAsync(pool),
+      this.getPoolUserInfoAsync(_id, _account)
+    ])
+    pool.apr = apr;
+    pool.userInfo = userInfo;
     return pool;
   }
 
   async getPoolsAsync(_account?: Maybe<string>): Promise<Pool[]> {
     const amount = await this.getTotalPoolsAsync();
-    const pools = [];
+    const pools:Pool[] = [];
+    const promises = [];
     for (let index = 0; index < amount; index++) {
-      try {
-        const pool = await this.getPoolAsync(index, _account);
-        pools.push(pool)
-      } catch (error) {
-        logger.error(error)();
-      }
+      promises.push((async () => {
+        try {
+          const pool = await this.getPoolAsync(index, _account);
+          pools.push(pool)
+        } catch (error) {
+          logger.error(error)();
+        }
+      })());
     }
+    await Promise.all(promises);
     return pools;
   }
 

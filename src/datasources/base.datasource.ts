@@ -2,6 +2,7 @@ import BigNumber from "bignumber.js";
 import { CoingeckoClient, getCoingeckoClient } from "../clients/coingecko.client";
 import { getVitexClient, VitexClient } from "../clients/vitex.client";
 import { TypeNames, UnknownToken } from "../common/constants";
+import ActionQueue from "../common/queue";
 import { CoinUtil, getCoinUtil } from "../util/coin.util";
 import { getEmitter, IGlobalEmitter } from "../util/emitter.util";
 import { Ensure } from "../util/ensure";
@@ -33,6 +34,7 @@ export abstract class BaseDataSource implements IDataSource {
   private readonly _vitexClient: VitexClient;
   private readonly _coinUtil: CoinUtil;
   private readonly _tokens: Map<string, Token>;
+  private readonly _queue: ActionQueue<string>;
   private readonly _tokensURL: Map<string, string>;
   private _moment: MomentUtil = new MomentUtil();
 
@@ -46,6 +48,7 @@ export abstract class BaseDataSource implements IDataSource {
     this._tokensURL = new Map<string, string>([
       ["tti_22d0b205bed4d268a05dfc3c", "https://vitamincoin.org/home"]
     ])
+    this._queue = new ActionQueue<string>();
   }
 
   async initAsync(network: Network): Promise<void> {
@@ -72,12 +75,18 @@ export abstract class BaseDataSource implements IDataSource {
         // pool is closed, should not display numeric APR.
         return undefined;
       }
-      const stakingTokenPrice = await this._coingeckoClient.getTokenPriceUSDAsync(pool.stakingToken.name);
-      const rewardTokenPrice = await this._coingeckoClient.getTokenPriceUSDAsync(pool.rewardToken.name);
+      const [
+        rewardTokenPrice,
+        stakingTokenPrice
+      ] = await Promise.all([
+        this._coingeckoClient.getTokenPriceUSDAsync(pool.rewardToken.name),
+        this._coingeckoClient.getTokenPriceUSDAsync(pool.stakingToken.name)
+      ]);
       const totalTime = pool.endBlock.minus(pool.startBlock);
       const secondsInYear = new BigNumber(365 * 24 * 60 * 60);
-      const usdRewardAmount = rewardTokenPrice.times(pool.totalRewards);
-      const usdStakingAmount = stakingTokenPrice.times(pool.totalStaked);
+      const usdRewardAmount = rewardTokenPrice.times(pool.totalRewards).shiftedBy(-pool.rewardToken.decimals);
+      const usdStakingAmount = stakingTokenPrice.times(pool.totalStaked).shiftedBy(-pool.stakingToken.decimals);
+      console.log(usdRewardAmount.toFixed(), usdStakingAmount.toFixed())
       const apr = new BigNumber(usdRewardAmount)
       .div(usdStakingAmount)
       .div(totalTime)
@@ -109,13 +118,13 @@ export abstract class BaseDataSource implements IDataSource {
 
   async getTokenAsync(id: string): Promise<Token> {
     try {
-      const existing = this._tokens.get(id);
-      if (existing) {
-        return existing;
-      }
-      const result = await this._vitexClient.getTokenDetailAsync(id);
-      if (result) {
-        const token = {
+      if(this._tokens.has(id))return this._tokens.get(id) as Token;
+      // @ts-ignore
+      return await this._queue.queueAction<Token>(id, async () => {
+        if(this._tokens.has(id))return this._tokens.get(id) as Token;
+        const result = await this._vitexClient.getTokenDetailAsync(id);
+        if(!result)return
+        const token:Token = {
           __typename: "Token",
           id,
           name: result.name,
@@ -127,7 +136,7 @@ export abstract class BaseDataSource implements IDataSource {
         }
         this._tokens.set(id, token);
         return token;
-      }
+      });
     } catch (error) {
       logger.error(error)();
     }
@@ -140,9 +149,15 @@ export abstract class BaseDataSource implements IDataSource {
   }
 
   protected async toPoolAsync(id: number, p: ContractPool): Promise<Pool> {
-    const stakingToken = await this.getTokenAsync(p.stakingTokenId);
-    const rewardToken = await this.getTokenAsync(p.rewardTokenId);
-    const endTimestamp = await this.getEndTimestampAsync(new BigNumber(p.endBlock));
+    const [
+      stakingToken,
+      rewardToken,
+      endTimestamp
+    ] = await Promise.all([
+      this.getTokenAsync(p.stakingTokenId),
+      this.getTokenAsync(p.rewardTokenId),
+      this.getEndTimestampAsync(new BigNumber(p.endBlock))
+    ]);
     const pool: Pool = {
       __typename: TypeNames.Pool,
       id,
