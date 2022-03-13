@@ -54,10 +54,16 @@ export const TotalEarnedRewards: React.FC<Props> = (props: Props) => {
     }
     return ViteUtil.formatBigNumber(rewardTokens, pool.rewardToken.decimals, decimals);
   }
+  const showTotalTokens = (decimals: number): string => {
+    if (!pool) {
+      return "0";
+    }
+    return ViteUtil.formatBigNumber(pool.totalRewards, pool.rewardToken.decimals, decimals);
+  }
 
   return (
     <>
-      {showRewardTokens(props.decimals)}
+      {showRewardTokens(props.decimals)}/{showTotalTokens(props.decimals)}
     </>
   );
 }
