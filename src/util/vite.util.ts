@@ -11,6 +11,6 @@ export abstract class ViteUtil {
   }
 
   static formatBigNumber(bn: BigNumber, tokenDecimals: number, decimals: number): string {
-    return bn.div(new BigNumber(10).pow(tokenDecimals)).decimalPlaces(decimals, BigNumber.ROUND_DOWN).toFormat();
+    return bn.shiftedBy(-tokenDecimals).decimalPlaces(decimals, BigNumber.ROUND_DOWN).toFormat();
   }
 }
