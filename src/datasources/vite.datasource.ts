@@ -127,7 +127,7 @@ export class ViteDataSource extends BaseDataSource {
       })());
     }
     await Promise.all(promises);
-    return pools;
+    return pools.sort((a, b) => a.id - b.id);
   }
 
   async getPoolUserInfoAsync(_poolId: number, _account?: Maybe<string>): Promise<Maybe<PoolUserInfo>> {

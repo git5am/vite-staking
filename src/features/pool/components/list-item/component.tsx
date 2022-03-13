@@ -14,6 +14,7 @@ import { PoolCountdown } from "../countdown";
 import { PoolDialog } from "../dialog";
 import { Rewards } from '../rewards';
 import { Tokens } from "../tokens";
+import { TotalEarnedRewards } from '../totalearnedrewards';
 
 const logger = getLogger()
 
@@ -142,10 +143,10 @@ export const PoolListItem: React.FC<Props> = (props: Props) => {
                   ) : (
                     <>
                       <Typography variant="body2" color="text.secondary">
-                        {props.pool?.rewardToken.originalSymbol} earned
+                        Total {props.pool?.rewardToken.originalSymbol} earned
                       </Typography>
                       <Typography variant="subtitle1">
-                        <Rewards pool={props.pool} decimals={4}></Rewards>
+                        <TotalEarnedRewards pool={props.pool} decimals={4}></TotalEarnedRewards>
                       </Typography>
                     </>
                   )}

@@ -38,21 +38,6 @@ export const Rewards: React.FC<Props> = (props: Props) => {
   }, [pool, props]);
 
   useEffect(() => {
-    if (pool) {
-      const newRewardTokens = ViteUtil.calculateRewardTokens(pool);
-      setRewardTokens(newRewardTokens);
-      if (props.setCanClaim) {
-        props.setCanClaim(!!props.pool && !!props.account && newRewardTokens.gt(0));
-      }
-    } else {
-      setRewardTokens(new BigNumber(0));
-      if (props.setCanClaim) {
-        props.setCanClaim(false);
-      }
-    }
-  }, [pool, props]);
-
-  useEffect(() => {
     let interval = setInterval(() => {
       const height = networkManager.networkHeight;
       if (pool) {
