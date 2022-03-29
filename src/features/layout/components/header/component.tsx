@@ -7,7 +7,6 @@ import { CommonUtil } from '../../../../util/common.util';
 import { BootstrapTooltip } from '../../../common/components/tooltip';
 import { LoginDialog } from '../../../main/components/login';
 import { NetworkList } from '../../../main/components/network-list';
-
 import IconButton from '@mui/material/IconButton';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
