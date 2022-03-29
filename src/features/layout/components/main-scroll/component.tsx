@@ -8,7 +8,7 @@ const MainScrollStyled = styled('div')(
   flex-grow: 1;
   align-items: center;
   padding-bottom: 15px;
-  padding-top: 30px;
+  //padding-top: 30px;
   overflow: auto;
   overflow-x: hidden;
 `,

@@ -8,6 +8,7 @@ import { MainWrapper } from '../../../layout/components/main-wrapper';
 import { Pools } from '../../../pool/components/main';
 import { ConfirmTransactionDialog } from '../dialog-transaction';
 import { Network } from '../network';
+import { Desc } from '../desc';
 
 export const Main: React.FC = (props: any) => {
   SnackbarUtil.snackbar = useSnackbar();
@@ -16,10 +17,11 @@ export const Main: React.FC = (props: any) => {
       <Header />
       <Network />
       <MainScroll>
+        <Desc></Desc>
         <Pools></Pools>
-        <ConfirmTransactionDialog></ConfirmTransactionDialog>
-      </MainScroll>
-      <Footer />
-    </MainWrapper>
+        <ConfirmTransactionDialog></ConfirmTransactionDialog>     
+      </MainScroll> 
+      <Footer /> 
+    </MainWrapper>   
   )
 }

@@ -1,4 +1,4 @@
-import { Grid } from "@mui/material";
+import { Grid, Paper, Card } from "@mui/material";
 import BigNumber from "bignumber.js";
 import { useEffect, useState } from "react";
 import { DefaultPoolFilterValues } from "../../../../common/constants";
@@ -8,7 +8,8 @@ import { FilterUtil } from "../../../../util/filter.util";
 import { getLogger } from "../../../../util/logger";
 import { GlobalEvent, Pool, PoolFilterValues } from "../../../../util/types";
 import { Alert } from "../../../common/components/alert";
-import { PoolListItem } from "../list-item";
+//import { PoolListItem } from "../list-item";
+import { PoolListItem } from "../list-card";
 
 const logger = getLogger()
 
@@ -92,16 +93,20 @@ export const PoolList: React.FC<Props> = (props: Props) => {
       {isLoading ? (
         <>
           {[0, 1, 2].map((index: number) => (
-            <Grid item key={index} xs={12} md={10}>
+            <Grid item key={index} xs={12} sm={5} md={4}>
+              <Paper elevation={16}>
               <PoolListItem></PoolListItem>
+              </Paper>
             </Grid>
           ))}
         </>
       ) : (
         <>
-          {pools?.map((p: Pool) => (
-            <Grid item key={p.id} xs={12} md={10}>
+          {pools?.map((p: Pool) => (          
+            <Grid item key={p.id} xs={12} sm={5} md={4}>
+              <Paper elevation={16}>
               <PoolListItem account={props.account} pool={p}></PoolListItem>
+              </Paper>
             </Grid>
           ))}
         </>

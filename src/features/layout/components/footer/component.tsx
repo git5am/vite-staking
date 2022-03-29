@@ -28,7 +28,7 @@ export const Footer: React.FC = () => {
   }, [emitter]);
 
   return (
-    <Box sx={{ py: "10px", px: "24px" }}>
+    <Box sx={{ py: "10px", px: "24px", background: "#171716", color: "#AFAEAC"}}>
       <Grid container direction="row" justifyContent="flex-end" alignItems="center" spacing={1}>
         <Grid item>
           <BootstrapTooltip title="Network block height" placement="top" arrow>
@@ -45,7 +45,7 @@ export const Footer: React.FC = () => {
         </Grid>
         <Grid item>
           <BootstrapTooltip title="Version" placement="top" arrow>
-            <Chip label={'v' + process.env.REACT_APP_VERSION} variant="outlined" size="small" />
+            <Chip label={'v' + process.env.REACT_APP_VERSION} variant="outlined" size="small" sx={{color: "#AFAEAC"}}/>
           </BootstrapTooltip>
         </Grid>
       </Grid>

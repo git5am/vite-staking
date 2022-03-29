@@ -1,8 +1,11 @@
-import { Checkbox, FormControl, FormControlLabel, FormGroup, Grid, InputLabel, MenuItem, Select, SelectChangeEvent, Stack, Switch, TextField, Typography } from "@mui/material";
+import { styled, Checkbox, FormControl, FormControlLabel, FormGroup, Grid, InputLabel, MenuItem, Select, SelectChangeEvent, Stack, Switch, TextField, Typography } from "@mui/material";
 import { useState } from "react";
 import { DefaultPoolFilterValues, PoolSortTypes } from "../../../../common/constants";
 import { getEmitter } from "../../../../util/emitter.util";
 import { PoolFilterValues } from "../../../../util/types";
+
+
+
 
 export const PoolFilter: React.FC = () => {
   const [values, setValues] = useState<PoolFilterValues>(DefaultPoolFilterValues);
@@ -34,7 +37,7 @@ export const PoolFilter: React.FC = () => {
     <Grid container justifyContent="center" alignItems="center" sx={{ mb: 2 }}>
       <Grid item xs={12} md={10}>
         <Grid container>
-          <Grid item xs sx={{ mr: 2 }}>
+          <Grid item xs sx={{ mr: 2, mb: 2 }}>
             <FormGroup>
               <Stack direction="row" alignItems="center" spacing={2}>
                 <FormControlLabel control={<Checkbox

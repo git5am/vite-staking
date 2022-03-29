@@ -1,6 +1,6 @@
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
-import { Accordion, AccordionDetails, AccordionSummary, Box, Button, Grid, Link, Paper, Skeleton, styled, Typography } from "@mui/material";
+import { Accordion, AccordionDetails, AccordionSummary, Box, Button, Grid, Link, Paper, Skeleton, styled, Typography, Card, CardHeader, CardContent} from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { getNetworkManager } from '../../../../common/network';
 import { getPoolService } from '../../../../services/pool.service';
@@ -129,12 +129,15 @@ export const PoolListItem: React.FC<Props> = (props: Props) => {
       }}>
         <AccordionSummary sx={{ backgroundColor: "rgba(217, 217, 217, 0.1)" }} expandIcon={<ExpandMoreIcon />}>        
           <Grid container justifyContent="center" alignItems="center" spacing={2} color="text.secondary">
-            <Grid item>
+            <Grid item xs={12} md={12}>
               <Tokens loading={!props.pool} pool={props.pool}></Tokens>
+            </Grid>
+            <Grid item xs={12} md={12}>
+                <PoolCountdown pool={props.pool} />
             </Grid>
             <Grid item xs container>
               <Grid item xs container justifyContent="space-evenly" direction="row" spacing={2}>
-                <Grid item>
+                <Grid item xs={9} sm={12} md={9}>
                   {!props.pool ? (
                     <>
                       <Skeleton animation="wave" height={25} width="90px" />
@@ -151,7 +154,7 @@ export const PoolListItem: React.FC<Props> = (props: Props) => {
                     </>
                   )}
                 </Grid>
-                <Grid item>
+                <Grid item xs={3} sm={12} md={3}>
                   <Typography variant="body2" color="text.secondary">
                     APR
                   </Typography>
@@ -171,7 +174,7 @@ export const PoolListItem: React.FC<Props> = (props: Props) => {
                     </Typography>
                   )}
                 </Grid>
-                <Grid item>
+                <Grid item xs={12} md={12}>
                   <Typography variant="body2" color="text.secondary">
                     Total staked
                   </Typography>
@@ -183,26 +186,25 @@ export const PoolListItem: React.FC<Props> = (props: Props) => {
                     </Typography>
                   )}
                 </Grid>
-                <Grid item>
-                  <PoolCountdown pool={props.pool} />
-                </Grid>
               </Grid>
             </Grid>
           </Grid>
         </AccordionSummary>
         <AccordionDetails sx={{ backgroundColor: "rgba(217, 217, 217, 0.3)", pt: 2 }}>
           <Grid container justifyContent="center" alignItems="center" spacing={2}>
-            <Grid item sx={{ mr: 4 }}>
-              <Link underline="none" href={props.pool?.rewardToken.url ?? "#"} target="_blank" sx={{ cursor: "pointer", display: "flex", alignItems: "center" }}>
-                View {props.pool?.rewardToken.originalSymbol}&nbsp;<OpenInNewIcon fontSize="small"></OpenInNewIcon>
-              </Link>
-              <Link underline="none" href={props.pool?.stakingToken.url ?? "#"} target="_blank" sx={{ cursor: "pointer", display: "flex", alignItems: "center" }}>
-                View {props.pool?.stakingToken.originalSymbol}&nbsp;<OpenInNewIcon fontSize="small"></OpenInNewIcon>
-              </Link>
-            </Grid>
             <Grid item xs container alignItems="center">
               <Grid item container justifyContent="space-evenly" direction="row" spacing={2}>
-                <Grid item xs={12} md={6} lg={5} zeroMinWidth>
+                <Grid item xs={6} md={6} container justifyContent="center" alignItems="center">
+                  <Link color="secondary" underline="none" href={props.pool?.stakingToken.url ?? "#"} target="_blank" sx={{ cursor: "pointer", display: "flex", alignItems: "center" }}>
+                    {props.pool?.stakingToken.originalSymbol}&nbsp;<OpenInNewIcon fontSize="small"></OpenInNewIcon>
+                  </Link>
+                </Grid>
+                <Grid item xs={6} md={6} container justifyContent="center" alignItems="center">
+                  <Link color="secondary" underline="none" href={props.pool?.rewardToken.url ?? "#"} target="_blank" sx={{ cursor: "pointer", display: "flex", alignItems: "center" }}>
+                    {props.pool?.rewardToken.originalSymbol}&nbsp;<OpenInNewIcon fontSize="small"></OpenInNewIcon>
+                  </Link>
+                </Grid>
+                <Grid item xs={12} md={12} zeroMinWidth>
                   <TransparentPaper variant="outlined">
                     <Typography variant="body2" color="text.secondary">
                       {props.pool?.rewardToken.originalSymbol} earned
@@ -224,7 +226,7 @@ export const PoolListItem: React.FC<Props> = (props: Props) => {
                   </TransparentPaper>
                 </Grid>
                 {!props.account ? (
-                  <Grid item xs={12} md={6} lg={5}>
+                  <Grid item xs={12} md={12}>
                     <TransparentPaper variant="outlined">
                       <Typography variant="body2" color="text.secondary">
                         Start staking
@@ -234,7 +236,7 @@ export const PoolListItem: React.FC<Props> = (props: Props) => {
                   </Grid>
                 ) : (
                   <>
-                    <Grid item xs={12} md={6} lg={5} zeroMinWidth>
+                    <Grid item xs={12} md={12} zeroMinWidth>
                       <TransparentPaper variant="outlined">
                         <Typography variant="body2" color="text.secondary">
                           Staked
@@ -253,7 +255,7 @@ export const PoolListItem: React.FC<Props> = (props: Props) => {
                         </Box>
                       </TransparentPaper>
                     </Grid>
-                    <Grid item xs={12} md sx={{ display: "flex", alignItems: "center" }}>
+                    <Grid item xs={12} md={12} sx={{ display: "flex", alignItems: "center" }}>
                       <Button variant="contained" size="large" fullWidth onClick={handleClickDeposit} disabled={!canStake}>
                         Stake
                       </Button>
