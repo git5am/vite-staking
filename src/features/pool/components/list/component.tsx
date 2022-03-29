@@ -1,5 +1,4 @@
-import { Grid, Paper, Card } from "@mui/material";
-import BigNumber from "bignumber.js";
+import { Grid, Paper } from "@mui/material";
 import { useEffect, useState } from "react";
 import { DefaultPoolFilterValues } from "../../../../common/constants";
 import { getCommonContext } from "../../../../contexts/common";
@@ -67,7 +66,7 @@ export const PoolList: React.FC<Props> = (props: Props) => {
         }
       }
     }
-    const handlePoolEvent = async (id: number, amount: BigNumber, account: string) => {
+    const handlePoolEvent = async (id: number) => {
       const pool = await commonContext.datasource.getPoolAsync(id, props.account)
       replacePool(pool)
     }

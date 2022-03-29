@@ -10,15 +10,6 @@ import { ThemeCtxProvider, useThemeMode } from "./hooks/themeContext";
 const Root = () => {
   const { darkMode } = useThemeMode();
   
-  const theme2 = React.useMemo(
-    () =>
-      createTheme({
-        palette: {
-          mode: darkMode ? 'dark' : 'light',
-        },
-      }),
-    [darkMode],
-  );
   //const [mode, setMode] = React.useState<'light' | 'dark'>('light');
   //https://mui.com/customization/color/#picking-colors
   //themes

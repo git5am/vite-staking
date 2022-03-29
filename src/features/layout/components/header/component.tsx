@@ -46,7 +46,7 @@ export const Header: React.FC = (props: any) => {
     mobileView: false,
     drawerOpen: false,
   });
-  const { mobileView, drawerOpen } = state;
+  const { mobileView } = state;
   useEffect(() => {
     const setResponsiveness = () => {
       return window.innerWidth < 900

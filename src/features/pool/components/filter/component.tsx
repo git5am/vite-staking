@@ -1,4 +1,4 @@
-import { styled, Checkbox, FormControl, FormControlLabel, FormGroup, Grid, InputLabel, MenuItem, Select, SelectChangeEvent, Stack, Switch, TextField, Typography } from "@mui/material";
+import { Checkbox, FormControl, FormControlLabel, FormGroup, Grid, InputLabel, MenuItem, Select, SelectChangeEvent, Stack, Switch, TextField, Typography } from "@mui/material";
 import { useState } from "react";
 import { DefaultPoolFilterValues, PoolSortTypes } from "../../../../common/constants";
 import { getEmitter } from "../../../../util/emitter.util";
