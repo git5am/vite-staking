@@ -1,4 +1,4 @@
-import { Dialog, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
+import { Dialog, DialogContent, DialogContentText, DialogTitle, Typography, Grid } from '@mui/material';
 import { Box } from '@mui/system';
 import React, { useEffect } from 'react';
 import { getViteClient } from '../../../../clients/vite.client';
@@ -40,12 +40,12 @@ export const LoginDialog: React.FC<Props> = (props: Props) => {
 
   return (
     <Dialog onClose={handleClose} open={open} maxWidth="xs">
+      <Grid container justifyContent="center" alignItems="center" color="text.primary">
       <DialogTitle>Connect Wallet</DialogTitle>
-      <DialogContent>
-        <DialogContentText>
-          Scan the QR code via Vite Wallet App
-        </DialogContentText>
-        <Box sx={{ mt: 2, textAlign: "center" }}>
+      <Typography sx={{ mb: 2}}>Scan the QR code via Vite Wallet App</Typography>
+      </Grid>
+      <DialogContent sx={{ textAlign: "center", background: "white" }}>
+        <Box sx={{ m: 2, textAlign: "center", background: "white" }}>
           <QrCode text={viteClient.connector?.uri}></QrCode>
         </Box>
       </DialogContent>
