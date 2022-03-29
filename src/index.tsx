@@ -5,7 +5,6 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 //import theme from './theme';
-import { amber, deepOrange, grey } from '@mui/material/colors';
 import { ThemeCtxProvider, useThemeMode } from "./hooks/themeContext";
 
 const Root = () => {
