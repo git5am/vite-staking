@@ -21,6 +21,7 @@ const Root = () => {
   );
   //const [mode, setMode] = React.useState<'light' | 'dark'>('light');
   //https://mui.com/customization/color/#picking-colors
+  //themes
   const theme = React.useMemo(
     () =>
       createTheme({
