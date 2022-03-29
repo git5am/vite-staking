@@ -1,6 +1,6 @@
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
-import { Accordion, AccordionDetails, AccordionSummary, Box, Button, Grid, Link, Paper, Skeleton, styled, Typography, Card, CardHeader, CardContent} from "@mui/material";
+import { Accordion, AccordionDetails, AccordionSummary, Box, Button, Grid, Link, Paper, Skeleton, styled, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { getNetworkManager } from '../../../../common/network';
 import { getPoolService } from '../../../../services/pool.service';
