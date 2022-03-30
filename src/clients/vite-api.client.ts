@@ -13,21 +13,21 @@ export type TokenDetailResult = {
   urlIcon: string
 }
 
-export class VitexClient {
+export class ViteAPIClient {
   private readonly _baseUrl: string;
 
   constructor() {
-    this._baseUrl = "https://vitex.vite.net"
+    this._baseUrl = "https://vite-api.thomiz.dev"
   }
 
   async getTokenDetailAsync(tokenId: string): Promise<Maybe<TokenDetailResult>> {
-    const result = await axios.get<BaseResult<TokenDetailResult>>(this._baseUrl + "/api/v1/token/detail?tokenId=" + tokenId);
+    const result = await axios.get<BaseResult<TokenDetailResult>>(`${this._baseUrl}/crypto-info/tokens/${tokenId}/details`);
     return result.data.data;
   }
 }
 
-const client = new VitexClient();
+const client = new ViteAPIClient();
 
-export const getVitexClient = () => {
+export const getViteAPIClient = () => {
   return client;
 }

@@ -1,6 +1,6 @@
 import BigNumber from "bignumber.js";
 import { CoingeckoClient, getCoingeckoClient } from "../clients/coingecko.client";
-import { getVitexClient, VitexClient } from "../clients/vitex.client";
+import { getViteAPIClient, ViteAPIClient } from "../clients/vite-api.client";
 import { TypeNames, UnknownToken } from "../common/constants";
 import ActionQueue from "../common/queue";
 import { CoinUtil, getCoinUtil } from "../util/coin.util";
@@ -31,7 +31,7 @@ export abstract class BaseDataSource implements IDataSource {
   protected readonly _emitter: IGlobalEmitter;
   private readonly _walletManager: WalletManager;
   private readonly _coingeckoClient: CoingeckoClient;
-  private readonly _vitexClient: VitexClient;
+  private readonly _vitexClient: ViteAPIClient;
   private readonly _coinUtil: CoinUtil;
   private readonly _tokens: Map<string, Token>;
   private readonly _queue: ActionQueue<string>;
@@ -42,7 +42,7 @@ export abstract class BaseDataSource implements IDataSource {
     this._emitter = getEmitter();
     this._walletManager = getWalletManager();
     this._coingeckoClient = getCoingeckoClient();
-    this._vitexClient = getVitexClient();
+    this._vitexClient = getViteAPIClient();
     this._coinUtil = getCoinUtil();
     this._tokens = new Map<string, Token>();
     this._tokensURL = new Map<string, string>([
