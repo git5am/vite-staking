@@ -45,6 +45,7 @@ export const PoolDepositDialog: React.FC<Props> = (props: Props) => {
       const _amount = new BigNumber(amount).times(new BigNumber(10).pow(props.pool.stakingToken.decimals));
       await poolService.depositAsync(props.pool.id, props.pool.stakingToken.id, _amount.toString());
       handleClose();
+      window.location.reload();//refresh window for see the result
     } catch (error) {
       SnackbarUtil.enqueueError(error);
     }
