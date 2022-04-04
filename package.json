@@ -43,7 +43,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "codegen": "apollo codegen:generate --localSchemaFile=client-schema.graphql --target=typescript --tagName=gql"
+    "codegen": "apollo codegen:generate --localSchemaFile=client-schema.graphql --target=typescript --tagName=gql",
+    "lint": "eslint"
   },
   "homepage": ".",
   "eslintConfig": {

@@ -79,9 +79,14 @@ export abstract class BaseDataSource implements IDataSource {
         rewardTokenPrice,
         stakingTokenPrice
       ] = await Promise.all([
-        this._coingeckoClient.getTokenPriceUSDAsync(pool.rewardToken.name),
-        this._coingeckoClient.getTokenPriceUSDAsync(pool.stakingToken.name)
-      ]);
+        pool.rewardToken,
+        pool.stakingToken
+      ].map(token => {
+        if(ViteAPIClient.lptokens.includes(token.id))return getViteAPIClient().getLPTokenValue(token.id)
+          .then(data => new BigNumber(data?.usd || 0))
+        
+        return this._coingeckoClient.getTokenPriceUSDAsync(token.name)
+      }));
       const totalTime = pool.endBlock.minus(pool.startBlock);
       const secondsInYear = new BigNumber(365 * 24 * 60 * 60);
       const usdRewardAmount = rewardTokenPrice.times(pool.totalRewards).shiftedBy(-pool.rewardToken.decimals);
