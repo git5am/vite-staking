@@ -6,6 +6,10 @@ import { CommonUtil } from '../../../../util/common.util';
 import { SnackbarUtil } from '../../../../util/snackbar.util';
 import { Pool, PoolDialogState } from '../../../../util/types';
 import { ClickOnceButton } from '../../../common/components/click-once-button';
+import { getAccountService } from '../../../../services/account.service';
+import { getLogger } from '../../../../util/logger';
+
+const logger = getLogger();
 
 interface Props {
   pool: Pool
@@ -17,6 +21,7 @@ export const PoolDepositDialog: React.FC<Props> = (props: Props) => {
   const [amount, setAmount] = useState<string>("");
   const [disabled, setDisabled] = useState<boolean>(false);
   const poolService = getPoolService();
+  const accountService = getAccountService();
 
   const changeAmount = (amount: string) => {
     setAmount(amount);
@@ -28,6 +33,16 @@ export const PoolDepositDialog: React.FC<Props> = (props: Props) => {
       changeAmount("")
     }
   }, [props.state])
+
+  useEffect(() => {
+    async function getBalanceAsync() {
+      const balance = await accountService.getBalanceAsync();
+      logger.info("Account balance:", balance.toString())();
+    }
+    if (props.state.open) {
+      getBalanceAsync();
+    }
+  }, [props.state, accountService])
 
   const handleClose = () => {
     props.setState({
@@ -45,7 +60,6 @@ export const PoolDepositDialog: React.FC<Props> = (props: Props) => {
       const _amount = new BigNumber(amount).times(new BigNumber(10).pow(props.pool.stakingToken.decimals));
       await poolService.depositAsync(props.pool.id, props.pool.stakingToken.id, _amount.toString());
       handleClose();
-      window.location.reload();//refresh window for see the result
     } catch (error) {
       SnackbarUtil.enqueueError(error);
     }
