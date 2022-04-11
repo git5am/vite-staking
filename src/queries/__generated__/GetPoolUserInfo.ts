@@ -14,6 +14,7 @@ export interface GetPoolUserInfo_poolUserInfo {
   account: string;
   stakingBalance: any;
   rewardDebt: any;
+  depositBlock: any;
 }
 
 export interface GetPoolUserInfo {

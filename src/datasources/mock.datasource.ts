@@ -168,7 +168,8 @@ export class MockDataSource extends BaseDataSource {
         poolId: _id,
         address: account,
         stakingBalance: amount.toString(),
-        rewardDebt: "0"
+        rewardDebt: "0",
+        depositBlock: "0"
       });
       this._users.push(userInfo);
     }

@@ -35,6 +35,7 @@ export const POOL_USER_INFO_FIELDS = gql`
     account
     stakingBalance
     rewardDebt
+    depositBlock
   }
 `;
 

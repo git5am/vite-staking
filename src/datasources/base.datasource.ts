@@ -89,8 +89,10 @@ export abstract class BaseDataSource implements IDataSource {
       }));
       const totalTime = pool.endBlock.minus(pool.startBlock);
       const secondsInYear = new BigNumber(365 * 24 * 60 * 60);
-      const usdRewardAmount = rewardTokenPrice.times(pool.totalRewards).shiftedBy(-pool.rewardToken.decimals);
-      const usdStakingAmount = stakingTokenPrice.times(pool.totalStaked).shiftedBy(-pool.stakingToken.decimals);
+      const usdRewardAmount = rewardTokenPrice.times(pool.totalRewards).shiftedBy(-pool.rewardToken.decimals)
+        .times(pool.removedDecimals);
+      const usdStakingAmount = stakingTokenPrice.times(pool.totalStaked).shiftedBy(-pool.stakingToken.decimals)
+        .times(pool.removedDecimals);
       console.log(usdRewardAmount.toFixed(), usdStakingAmount.toFixed())
       const apr = new BigNumber(usdRewardAmount)
       .div(usdStakingAmount)
@@ -177,7 +179,9 @@ export abstract class BaseDataSource implements IDataSource {
       rewardPerPeriod: new BigNumber(p.rewardPerPeriod),
       rewardPerToken: new BigNumber(p.rewardPerToken),
       paidOut: new BigNumber(p.paidOut),
-      fetchTimestamp: this._moment.get().unix()
+      fetchTimestamp: this._moment.get().unix(),
+      removedDecimals: new BigNumber(p.removedDecimals || 1),
+      timelock: new BigNumber(p.timelock || 0)
     };
     return pool;
   }
@@ -189,7 +193,8 @@ export abstract class BaseDataSource implements IDataSource {
       poolId: u.poolId,
       account: u.address,
       stakingBalance: new BigNumber(u.stakingBalance),
-      rewardDebt: new BigNumber(u.rewardDebt)
+      rewardDebt: new BigNumber(u.rewardDebt),
+      depositBlock: new BigNumber(u.depositBlock)
     }
   }
 

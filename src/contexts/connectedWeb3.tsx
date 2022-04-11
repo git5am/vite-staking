@@ -56,7 +56,7 @@ export const ConnectedWeb3: React.FC<Props> = (props: Props) => {
   useEffect(() => {
     if (!network) {
       const networkManager = getNetworkManager()
-      const networkId = Number(process.env.REACT_APP_DEFAULT_NETWORK ?? "2");
+      const networkId = Number(process.env.REACT_APP_DEFAULT_NETWORK ?? "3");
       networkManager.setNetwork(Networks.find(e => e.id === networkId))
       logger.info("Network:", networkManager.getNetwork())()
     }

@@ -1,6 +1,7 @@
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import { Accordion, AccordionDetails, AccordionSummary, Box, Button, Grid, Link, Paper, Skeleton, styled, Typography } from "@mui/material";
+import BigNumber from 'bignumber.js';
 import React, { useEffect, useState } from "react";
 import { getNetworkManager } from '../../../../common/network';
 import { getPoolService } from '../../../../services/pool.service';
@@ -13,6 +14,7 @@ import { ClickOnceButton } from '../../../common/components/click-once-button';
 import { PoolCountdown } from "../countdown";
 import { PoolDialog } from "../dialog";
 import { Rewards } from '../rewards';
+import { TimeLock } from '../timelock';
 import { Tokens } from "../tokens";
 import { TotalEarnedRewards } from '../totalearnedrewards';
 
@@ -44,17 +46,35 @@ export const PoolListItem: React.FC<Props> = (props: Props) => {
   const [expanded, setExpanded] = useState<boolean>(() => {
     if(!props.pool)return true
     return localStorage.getItem(
-      `${networkManager.getNetwork()?.contract}.${props.pool?.id}.expanded`
+      `${networkManager.getNetwork()?.contractAddress}.${props.pool?.id}.expanded`
     ) !== "false"
   })
 
   useEffect(() => {
-    if (props.pool) {
-      logger.info(`Pool loaded: ${props.pool?.id}`)();
-      setCanWithdraw(!!props.pool && !!props.account && (props.pool.userInfo?.stakingBalance.gt(0) ?? false));
-    } else {
-      setCanWithdraw(false);
+    let height = new BigNumber(0)
+    const refresh = () => {
+      if(height.isEqualTo(networkManager.networkHeight))return
+      height = networkManager.networkHeight
+      if (props.pool) {
+        logger.info(`Pool loaded: ${props.pool?.id}`)();
+        let timelockOK = true;
+        const hasStarted = props.pool.startBlock.isGreaterThanOrEqualTo(height)
+        const hasNotEnded = props.pool.endBlock.isLessThanOrEqualTo(height)
+        if(props.pool.timelock.isGreaterThan(0) && props.pool.userInfo && hasStarted && hasNotEnded){
+          // timelock + depositBlock < networkHeight
+          timelockOK = props.pool.userInfo.depositBlock.plus(props.pool.timelock).isLessThanOrEqualTo(height);
+        }
+        setCanWithdraw(!!props.account && (props.pool.userInfo?.stakingBalance.gt(0) ?? false) && timelockOK);
+      } else {
+        setCanWithdraw(false);
+      }
     }
+    refresh()
+    const interval = setInterval(refresh, 500)
+    return () => {
+      clearInterval(interval)
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.pool, props.account]);
 
   useEffect(() => {
@@ -122,7 +142,7 @@ export const PoolListItem: React.FC<Props> = (props: Props) => {
       <Accordion expanded={expanded} onChange={(ev, expanded) => {
         if(!props.pool)return
         localStorage.setItem(
-          `${networkManager.getNetwork()?.contract}.${props.pool.id}.expanded`,
+          `${networkManager.getNetwork()?.contractAddress}.${props.pool.id}.expanded`,
           String(expanded)
         )
         setExpanded(expanded)
@@ -137,7 +157,7 @@ export const PoolListItem: React.FC<Props> = (props: Props) => {
             </Grid>
             <Grid item xs container>
               <Grid item xs container justifyContent="space-evenly" direction="row" spacing={2}>
-                <Grid item xs={9} sm={12} md={9}>
+                <Grid item xs={7} sm={12} md={7}>
                   {!props.pool ? (
                     <>
                       <Skeleton animation="wave" height={25} width="90px" />
@@ -154,7 +174,7 @@ export const PoolListItem: React.FC<Props> = (props: Props) => {
                     </>
                   )}
                 </Grid>
-                <Grid item xs={3} sm={12} md={3}>
+                <Grid item xs={5} sm={12} md={5}>
                   <Typography variant="body2" color="text.secondary">
                     APR
                   </Typography>
@@ -174,7 +194,7 @@ export const PoolListItem: React.FC<Props> = (props: Props) => {
                     </Typography>
                   )}
                 </Grid>
-                <Grid item xs={12} md={12}>
+                <Grid item xs={5} md={5}>
                   <Typography variant="body2" color="text.secondary">
                     Total staked
                   </Typography>
@@ -186,6 +206,15 @@ export const PoolListItem: React.FC<Props> = (props: Props) => {
                     </Typography>
                   )}
                 </Grid>
+                {props.pool?.timelock.isGreaterThan(0) ? <Grid item xs={7} md={7}>
+                  <Typography variant="body2" color="text.secondary">
+                    Timelock
+                  </Typography>
+                  <Typography variant="subtitle1">
+                    <TimeLock pool={props.pool} />
+                  </Typography>
+                </Grid> : null}
+                
               </Grid>
             </Grid>
           </Grid>
