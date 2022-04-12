@@ -19,7 +19,7 @@ export const TotalEarnedRewards: React.FC<Props> = (props: Props) => {
   }, [props.pool]);
 
   useEffect(() => {
-    let height = networkManager.networkHeight;
+    let height = new BigNumber(0);
     const refresh = () => {
       if(height.isEqualTo(networkManager.networkHeight))return;
       height = networkManager.networkHeight;
@@ -33,7 +33,7 @@ export const TotalEarnedRewards: React.FC<Props> = (props: Props) => {
               networkManager.networkHeight
         ).minus(pool.startBlock);
 
-        const rewards = now.div(duration).times(pool.totalRewards);
+        const rewards = now.div(duration).times(pool.totalRewards).times(pool.removedDecimals);
         
         setRewardTokens(rewards);
       } else {
@@ -58,7 +58,7 @@ export const TotalEarnedRewards: React.FC<Props> = (props: Props) => {
     if (!pool) {
       return "0";
     }
-    return ViteUtil.formatBigNumber(pool.totalRewards, pool.rewardToken.decimals, decimals);
+    return ViteUtil.formatBigNumber(pool.totalRewards.times(pool.removedDecimals), pool.rewardToken.decimals, decimals);
   }
 
   return (

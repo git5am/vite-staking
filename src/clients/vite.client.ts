@@ -141,6 +141,41 @@ export class ViteClient {
     return "";
   }
 
+  async queryContractAsync(contractAddress: string, abi: any, params: any): Promise<any> {
+    let data = abiutils.encodeFunctionCall(abi, params);
+    let dataBase64 = Buffer.from(data, "hex").toString("base64");
+    let result = await this.requestAsync("contract_query", {
+      address: contractAddress,
+      data: dataBase64,
+    });
+    if (result) {
+      let resultBytes = Buffer.from(result, "base64").toString("hex");
+      let outputs = [];
+      for (let i = 0; i < abi.outputs.length; i++) {
+        outputs.push(abi.outputs[i].type);
+      }
+      let offchainDecodeResult = abiutils.decodeParameters(outputs, resultBytes);
+      let resultList = [];
+      if (offchainDecodeResult) {
+        for (let i = 0; i < abi.outputs.length; i++) {
+          if (abi.outputs[i].name) {
+            resultList.push({
+              name: abi.outputs[i].name,
+              value: offchainDecodeResult[i],
+            });
+          } else {
+            resultList.push({
+              name: "",
+              value: offchainDecodeResult[i],
+            });
+          }
+        }
+      }
+      return resultList;
+    }
+    return "";
+  }
+
   decodeVmLog(vmLog: any, abi: any): Maybe<VmLog> {
     let topics = vmLog.topics;
     for (let j = 0; j < abi.length; j++) {

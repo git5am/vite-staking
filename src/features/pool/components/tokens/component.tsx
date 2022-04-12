@@ -13,13 +13,13 @@ export const Tokens: React.FC<Props> = (props: Props) => {
     width: 70,
     height: 70,
     backgroundColor: "white",
-    border: "1px solid black"
+    border: "3px solid black"
   }));
   const SmallCoin = styled(Avatar)(({ theme }) => ({
     width: 40,
     height: 40,
     backgroundColor: "white",
-    border: `1px solid ${theme.palette.grey[600]}`
+    border: `3px solid ${theme.palette.grey[600]}`
   }));
   const coinUtil = getCoinUtil();
 

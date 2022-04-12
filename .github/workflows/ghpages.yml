@@ -25,9 +25,10 @@ jobs:
           sudo apt-get install build-essential git -y
       - name: Install and Build
         run: |
-          npm install
+          npm install -g yarn
+          yarn install
           node setupenv.js
-          npm run build
+          yarn build
       - name: Deploy to gh-pages
         uses: JamesIves/github-pages-deploy-action@4.0.0
         with:

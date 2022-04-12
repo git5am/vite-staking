@@ -13,6 +13,7 @@ import { ClickOnceButton } from '../../../common/components/click-once-button';
 import { PoolCountdown } from "../countdown";
 import { PoolDialog } from "../dialog";
 import { Rewards } from '../rewards';
+import { TimeLock } from '../timelock';
 import { Tokens } from "../tokens";
 import { TotalEarnedRewards } from '../totalearnedrewards';
 
@@ -44,7 +45,7 @@ export const PoolListItem: React.FC<Props> = (props: Props) => {
   const [expanded, setExpanded] = useState<boolean>(() => {
     if(!props.pool)return true
     return localStorage.getItem(
-      `${networkManager.getNetwork()?.contract}.${props.pool?.id}.expanded`
+      `${networkManager.getNetwork()?.contractAddress}.${props.pool?.id}.expanded`
     ) !== "false"
   })
 
@@ -122,7 +123,7 @@ export const PoolListItem: React.FC<Props> = (props: Props) => {
       <Accordion expanded={expanded} onChange={(ev, expanded) => {
         if(!props.pool)return
         localStorage.setItem(
-          `${networkManager.getNetwork()?.contract}.${props.pool.id}.expanded`,
+          `${networkManager.getNetwork()?.contractAddress}.${props.pool.id}.expanded`,
           String(expanded)
         )
         setExpanded(expanded)
@@ -186,6 +187,12 @@ export const PoolListItem: React.FC<Props> = (props: Props) => {
                 <Grid item>
                   <PoolCountdown pool={props.pool} />
                 </Grid>
+                {props.pool && props.pool.timelock.isGreaterThan(0) ? <Grid item>
+                  <Typography variant="subtitle1">
+                    <TimeLock pool={props.pool}/>
+                  </Typography>
+                </Grid> : null}
+                
               </Grid>
             </Grid>
           </Grid>

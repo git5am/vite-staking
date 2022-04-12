@@ -19,7 +19,8 @@ export type Network = {
   name: string
   rpcUrl: string
   connectorUrl: string,
-  contract: string
+  contractAddress: string,
+  contractType: "0.1"|"0.2"
 }
 
 export type Token = {
@@ -49,7 +50,9 @@ export type Pool = {
   rewardPerToken: BigNumber
   paidOut: BigNumber
   userInfo?: Maybe<PoolUserInfo>
-  fetchTimestamp: number
+  fetchTimestamp: number,
+  removedDecimals: BigNumber,
+  timelock: BigNumber
 }
 
 export type ContractPool = {
@@ -62,7 +65,9 @@ export type ContractPool = {
   latestRewardBlock: string
   rewardPerPeriod: string
   rewardPerToken: string
-  paidOut: string
+  paidOut: string,
+  removedDecimals: string,
+  timelock: string
 }
 
 export type PoolUserInfo = {
@@ -71,14 +76,16 @@ export type PoolUserInfo = {
   poolId: number
   account: string
   stakingBalance: BigNumber
-  rewardDebt: BigNumber
+  rewardDebt: BigNumber,
+  depositBlock: BigNumber
 }
 
 export type ContractPoolUserInfo = {
   poolId: number
   address: string
   stakingBalance: string
-  rewardDebt: string
+  rewardDebt: string,
+  depositBlock: string
 }
 
 export type PoolFilterValues = {

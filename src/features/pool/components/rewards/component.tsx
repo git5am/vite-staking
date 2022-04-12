@@ -59,7 +59,7 @@ export const Rewards: React.FC<Props> = (props: Props) => {
     if (!pool) {
       return "0";
     }
-    return ViteUtil.formatBigNumber(rewardTokens, pool.rewardToken.decimals, decimals);
+    return ViteUtil.formatBigNumber(rewardTokens.times(pool.removedDecimals), pool.rewardToken.decimals, decimals);
   }
 
   return (

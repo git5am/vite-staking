@@ -30,9 +30,9 @@ export class ViteDataSource extends BaseDataSource {
   }
 
   protected async initAsyncProtected(network: Network): Promise<void> {
-    const contract = await this._fileUtil.readFileAsync('./assets/contracts/vite_staking_pools.json');
+    const contract = await this._fileUtil.readFileAsync(`./assets/contracts/beefstake${network.contractType}.json`);
     this._contract = JSON.parse(contract) as Contract;
-    this._contract.address = network.contract
+    this._contract.address = network.contractAddress
     logger.info(`Contract ${this._contract?.contractName} loaded`)();
     this._listener = await this._client.createAddressListenerAsync(this._contract.address);
     this._listener.on((results: any[]) => {
