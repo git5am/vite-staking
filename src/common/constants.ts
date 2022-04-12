@@ -48,7 +48,7 @@ export const Networks: Network[] = [
     name: 'BeefStake v0.2',
     rpcUrl: CommonConstants.nodes.mainnet,
     connectorUrl: CommonConstants.VITECONNECT_URL,
-    contractAddress: "vite_cc2d0c2c34ae6af8bd58e111ca8c958d002c2b3199f449c8d7",
+    contractAddress: "vite_c85b335e221fc99631785f3d579edd1b7a2691131b7f3998a3",
     contractType: "0.2"
   },
 ]
