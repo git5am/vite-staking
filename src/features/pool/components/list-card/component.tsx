@@ -156,7 +156,7 @@ export const PoolListItem: React.FC<Props> = (props: Props) => {
                 <PoolCountdown pool={props.pool} />
             </Grid>
             <Grid item xs container>
-              <Grid item xs container justifyContent="space-evenly" direction="row" spacing={2}>
+              <Grid item xs container justifyContent="space-evenly" direction="row">
                 <Grid item xs={7} sm={12} md={7}>
                   {!props.pool ? (
                     <>
@@ -174,7 +174,7 @@ export const PoolListItem: React.FC<Props> = (props: Props) => {
                     </>
                   )}
                 </Grid>
-                <Grid item xs={5} sm={12} md={5}>
+                <Grid item xs={5} sm={12} md={5} sx={{textAlign: 'right'}}>
                   <Typography variant="body2" color="text.secondary">
                     APR
                   </Typography>
@@ -194,7 +194,7 @@ export const PoolListItem: React.FC<Props> = (props: Props) => {
                     </Typography>
                   )}
                 </Grid>
-                <Grid item xs={5} md={5}>
+                <Grid item xs={5} md={5} mt={2}>
                   <Typography variant="body2" color="text.secondary">
                     Total staked
                   </Typography>

@@ -1,4 +1,4 @@
-import {Grid, Typography, Box } from "@mui/material";
+import {Grid, Typography, Box, Link} from "@mui/material";
 import React from 'react';
 
 export const Desc: React.FC = () => {
@@ -8,10 +8,21 @@ export const Desc: React.FC = () => {
           <Box p={2}>
           <Box>
             <Typography color="text.secondary">
-              <h1>Earn big staking rewards with BeefStake</h1>
+              <h1>Earn beefy staking rewards with BeefStake!</h1>
             </Typography>
             <Typography color="text.secondary">
-              <h2>Just connect your Vite wallet and start earning right away</h2>
+              <h3>Easily claim free vitamincoin from our&nbsp;
+                <Link color="secondary" underline="none" href={"https://vitaminfaucet.com"} target="_blank" sx={{cursor: "pointer"}}>
+                  faucet
+                </Link>
+                , or earn in our&nbsp;
+                <Link color="secondary" underline="none" href={"https://discord.gg/vitamincoin"} target="_blank" sx={{cursor: "pointer"}}>
+                  Discord
+                </Link>
+                </h3>
+            </Typography>
+            <Typography color="text.secondary">
+              <h3>Connect your Vite wallet and start earning right away</h3>
             </Typography>
             </Box>
           </Box>
