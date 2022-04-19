@@ -14,8 +14,16 @@ export const formatDuration = (timelock: BigNumber, moment: MomentUtil) => {
     
     const duration = moment.getDuration(timelock.toNumber());
     const format = []
-    if (duration.days() > 0) {
-      format.push(duration.days() + " day"+(duration.days() > 1 ? "s" : ""))
+    if (duration.months() > 0) {
+      format.push(duration.months() + " month"+(duration.months() > 1 ? "s" : ""))
+    }
+    if (
+      duration.days() > 0 || 
+      (
+        format.length && 
+        (duration.hours() > 0 || duration.minutes() > 0 || duration.seconds() > 0)
+      )) {
+      format.push(duration.days() + " day"+(duration.days()>1?"s":""))
     }
     if (
       duration.hours() > 0 || 

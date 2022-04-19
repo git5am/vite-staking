@@ -31,7 +31,9 @@ export const PoolCountdown: React.FC<Props> = (props: Props) => {
         if (remainingBlocks.gte(0)) {
           setRemainingBlocks(remainingBlocks);
           const duration = moment.getDuration(remainingBlocks.toNumber());
-          if (duration.days() > 0) {
+          if (duration.months() > 0) {
+            setCountdown(duration.months() + " months " + duration.days() + " days")
+          } else if (duration.days() > 0) {
             setCountdown(duration.days() + " days " + duration.hours() + " hours")
           } else if (duration.hours() > 0) {
             setCountdown(duration.hours() + " hours " + duration.minutes() + " minutes")
