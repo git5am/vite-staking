@@ -14,7 +14,9 @@ export class CoinUtil {
     ]);
     this._coingeckoMap = new Map<string, string>([
       ["Avalanche", "avalanche-2"],
-      ["Terra", "terra-luna"]
+      ["Terra", "terra-luna"],
+      ["ViteX Coin", "vitex"],
+      ["Hedera", "hedera-hashgraph"]
     ]);
   }
 
