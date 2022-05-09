@@ -17,6 +17,7 @@ export class ViteDataSource extends BaseDataSource {
   private readonly _cachedNetworkBlockHeight: CachedFunctionCall<number>;
   private _contract?: Contract;
   private _listener: any;
+  private _network?: Network;
 
   constructor(fileUtil: FileUtil = new BrowserFileUtil()) {
     super();
@@ -34,6 +35,7 @@ export class ViteDataSource extends BaseDataSource {
     this._contract = JSON.parse(contract) as Contract;
     this._contract.address = network.contractAddress
     logger.info(`Contract ${this._contract?.contractName} loaded`)();
+    this._network = network
     this._listener = await this._client.createAddressListenerAsync(this._contract.address);
     this._listener.on((results: any[]) => {
       if (!this._contract?.abi) {
@@ -117,6 +119,8 @@ export class ViteDataSource extends BaseDataSource {
     const pools:Pool[] = [];
     const promises = [];
     for (let index = 0; index < amount; index++) {
+      // skip error vitcwust pool
+      if(index === 17 && this._network?.id === 4)continue
       promises.push((async () => {
         try {
           const pool = await this.getPoolAsync(index, _account);
