@@ -68,6 +68,12 @@ export const PoolListItem: React.FC<Props> = (props: Props) => {
       } else {
         setCanWithdraw(false);
       }
+
+      // Disable Claim and Withdraw buttons when is staking
+      if(props.pool?.timelock.isGreaterThan(0)){
+        setCanWithdraw(false);
+        setCanClaim(false);
+      }
     }
     refresh()
     const interval = setInterval(refresh, 500)
@@ -148,16 +154,16 @@ export const PoolListItem: React.FC<Props> = (props: Props) => {
         setExpanded(expanded)
       }}>
         <AccordionSummary sx={{ backgroundColor: "rgba(217, 217, 217, 0.1)" }} expandIcon={<ExpandMoreIcon />}>        
-          <Grid container justifyContent="center" alignItems="center" spacing={2} color="text.secondary">
+          <Grid container justifyContent="center" alignItems="center" spacing={2} color="text.secondary" sx={{minHeight: "360px"}}>
             <Grid item xs={12} md={12}>
               <Tokens loading={!props.pool} pool={props.pool}></Tokens>
             </Grid>
             <Grid item xs={12} md={12}>
                 <PoolCountdown pool={props.pool} />
             </Grid>
-            <Grid item xs container>
-              <Grid item xs container justifyContent="space-evenly" direction="row">
-                <Grid item xs={7} sm={12} md={7}>
+
+              <Grid item container justifyContent="space-evenly" direction="row">
+                <Grid item xs={12} sm={12} md={7}>
                   {!props.pool ? (
                     <>
                       <Skeleton animation="wave" height={25} width="90px" />
@@ -174,7 +180,7 @@ export const PoolListItem: React.FC<Props> = (props: Props) => {
                     </>
                   )}
                 </Grid>
-                <Grid item xs={5} sm={12} md={5} sx={{textAlign: 'right'}}>
+                <Grid item xs={12} sm={12} md={5} sx={{textAlign: 'right'}}>
                   <Typography variant="body2" color="text.secondary">
                     APR
                   </Typography>
@@ -194,7 +200,10 @@ export const PoolListItem: React.FC<Props> = (props: Props) => {
                     </Typography>
                   )}
                 </Grid>
-                <Grid item xs={5} md={5} mt={2}>
+                </Grid>
+
+                <Grid item container justifyContent="space-evenly" direction="row">
+                <Grid item xs={12} sm={12} md={12} mt={2}>
                   <Typography variant="body2" color="text.secondary">
                     Total staked
                   </Typography>
@@ -206,17 +215,19 @@ export const PoolListItem: React.FC<Props> = (props: Props) => {
                     </Typography>
                   )}
                 </Grid>
-                {props.pool?.timelock.isGreaterThan(0) ? <Grid item xs={7} md={7}>
+                </Grid>
+                <Grid item container justifyContent="space-evenly" direction="row">
+                {props.pool?.timelock.isGreaterThan(0) ? <Grid item xs={12} sm={12} md={12}>
                   <Typography variant="body2" color="text.secondary">
                     Timelock
                   </Typography>
                   <Typography variant="subtitle1">
                     <TimeLock pool={props.pool} />
                   </Typography>
-                </Grid> : null}
-                
+                </Grid> : null}  
               </Grid>
-            </Grid>
+
+
           </Grid>
         </AccordionSummary>
         <AccordionDetails sx={{ backgroundColor: "rgba(217, 217, 217, 0.3)", pt: 2 }}>
@@ -243,7 +254,7 @@ export const PoolListItem: React.FC<Props> = (props: Props) => {
                         <Skeleton animation="wave" height={30} width="100%" />
                       ) : (
                         <Typography sx={{ width: "100%" }} noWrap>
-                          <Rewards pool={props.pool} decimals={18} account={props.account} setCanClaim={setCanClaim}></Rewards>
+                          <Rewards pool={props.pool} decimals={18} account={props.account}></Rewards>
                         </Typography>
                       )}
                       <Box sx={{ ml: 2 }} >

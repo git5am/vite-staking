@@ -41,7 +41,8 @@ export const formatDuration = (timelock: BigNumber, moment: MomentUtil) => {
     ) {
       format.push(duration.minutes() + " minute"+(duration.minutes()>1?"s":""))
     } 
-    if(duration.seconds() > 0) {
+    //shows seconds only when days and hours are ziro
+    if(duration.days() === 0 && duration.hours() === 0 && duration.seconds() > 0) {
       format.push(duration.seconds() + " second"+(duration.seconds()>1?"s":""))
     }
     return format.join(" ")
