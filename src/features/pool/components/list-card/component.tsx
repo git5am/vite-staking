@@ -69,10 +69,9 @@ export const PoolListItem: React.FC<Props> = (props: Props) => {
         setCanWithdraw(false);
       }
 
-      // Disable Claim and Withdraw buttons when is staking
+      // Disable Withdraw button when staking & timelock
       if(props.pool?.timelock.isGreaterThan(0)){
         setCanWithdraw(false);
-        setCanClaim(false);
       }
     }
     refresh()
@@ -254,7 +253,7 @@ export const PoolListItem: React.FC<Props> = (props: Props) => {
                         <Skeleton animation="wave" height={30} width="100%" />
                       ) : (
                         <Typography sx={{ width: "100%" }} noWrap>
-                          <Rewards pool={props.pool} decimals={18} account={props.account}></Rewards>
+                          <Rewards pool={props.pool} decimals={18} account={props.account} setCanClaim={setCanClaim}></Rewards>
                         </Typography>
                       )}
                       <Box sx={{ ml: 2 }} >
