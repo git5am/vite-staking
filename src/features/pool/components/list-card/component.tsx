@@ -58,19 +58,14 @@ export const PoolListItem: React.FC<Props> = (props: Props) => {
       if (props.pool) {
         logger.info(`Pool loaded: ${props.pool?.id}`)();
         let timelockOK = true;
-        const hasStarted = props.pool.startBlock.isGreaterThanOrEqualTo(height)
-        const hasNotEnded = props.pool.endBlock.isLessThanOrEqualTo(height)
+        const hasStarted = props.pool.startBlock.isLessThanOrEqualTo(height)
+        const hasNotEnded = props.pool.endBlock.isGreaterThanOrEqualTo(height)
         if(props.pool.timelock.isGreaterThan(0) && props.pool.userInfo && hasStarted && hasNotEnded){
-          // timelock + depositBlock < networkHeight
+          // timelock + depositBlock < networkHeight  
           timelockOK = props.pool.userInfo.depositBlock.plus(props.pool.timelock).isLessThanOrEqualTo(height);
         }
         setCanWithdraw(!!props.account && (props.pool.userInfo?.stakingBalance.gt(0) ?? false) && timelockOK);
       } else {
-        setCanWithdraw(false);
-      }
-
-      // Disable Withdraw button when staking & timelock
-      if(props.pool?.timelock.isGreaterThan(0)){
         setCanWithdraw(false);
       }
     }
