@@ -52,11 +52,14 @@ export const TimeLock: React.FC<Props> = (props: Props) => {
   const [pool, setPool] = useState<Maybe<Pool>>(props.pool);
   const userInfo = pool?.userInfo
   const moment = useMemo(() => getMomentFactory().create(), []);
-  const timelockReadable = useMemo(() => {
-      return formatDuration(pool?.timelock || new BigNumber(0), moment);
-  }, [pool?.timelock, moment])
   const [userTimelock, setUserTimelock] = useState(new BigNumber(0));
   const networkManager = getNetworkManager();
+  const untilEnd = pool?.endBlock.minus(networkManager.networkHeight)
+  const shouldRefreshReadable = untilEnd?.isLessThan(pool?.timelock || 0) ? new BigNumber(0) : untilEnd
+  const timelockReadable = useMemo(() => {
+    return formatDuration(untilEnd?.isLessThan(pool?.timelock || 0) ? untilEnd : pool?.timelock || new BigNumber(0), moment);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pool?.timelock, moment, shouldRefreshReadable])
 
   useEffect(() => {
     setPool(props.pool);
@@ -75,6 +78,10 @@ export const TimeLock: React.FC<Props> = (props: Props) => {
         
         const elapsed = height.minus(userInfo?.depositBlock || 0).minus(1);
         let remaining = pool.timelock.minus(elapsed);
+
+        if(pool.timelock.plus(userInfo.depositBlock).isGreaterThan(pool.endBlock)){
+          remaining = pool.endBlock.minus(height)
+        }
         if(remaining.isLessThan(0)){
             remaining = new BigNumber(0);
         }
@@ -101,6 +108,7 @@ export const TimeLock: React.FC<Props> = (props: Props) => {
     if (!pool || !userInfo) {
       return "";
     }
+    if(userTimelock.isEqualTo(0))return ""
     return formatDuration(userTimelock, moment)+"/";
   }
 
