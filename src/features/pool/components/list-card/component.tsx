@@ -148,7 +148,7 @@ export const PoolListItem: React.FC<Props> = (props: Props) => {
         setExpanded(expanded)
       }}>
         <AccordionSummary sx={{ backgroundColor: "rgba(217, 217, 217, 0.1)" }} expandIcon={<ExpandMoreIcon />}>        
-          <Grid container justifyContent="center" alignItems="center" spacing={2} color="text.secondary" sx={{minHeight: "360px"}}>
+          <Grid container justifyContent="center" alignItems="center" spacing={2} color="text.secondary" sx={{minHeight: "395px"}}>
             <Grid item xs={12} md={12}>
               <Tokens loading={!props.pool} pool={props.pool}></Tokens>
             </Grid>
@@ -212,10 +212,10 @@ export const PoolListItem: React.FC<Props> = (props: Props) => {
                 </Grid>
                 <Grid item container justifyContent="space-evenly" direction="row">
                 {props.pool?.timelock.isGreaterThan(0) ? <Grid item xs={12} sm={12} md={12}>
-                  <Typography variant="body2" color="text.secondary">
-                    Timelock
+                  <Typography variant="subtitle1" sx={{ color: '#ff4c4c', fontWeight: 700}}>
+                  This is a LOCKED pool, timelock 
                   </Typography>
-                  <Typography variant="subtitle1">
+                  <Typography variant="subtitle1" sx={{ color: '#ff4c4c'}}>
                     <TimeLock pool={props.pool} />
                   </Typography>
                 </Grid> : null}  
