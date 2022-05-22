@@ -119,6 +119,7 @@ export enum GlobalEvent {
   PoolFilterValuesChanged = 'PoolFilterValuesChanged',
   PoolDeposit = 'PoolDeposit',
   PoolWithdraw = 'PoolWithdraw',
+  PoolClaim = 'PoolClaim',
   PoolUpdate = 'PoolUpdate'
 }
 
@@ -131,5 +132,6 @@ export type VmLog = {
 export enum VmLogEvent {
   PoolCreated = 'PoolCreated',
   Deposit = 'Deposit',
-  Withdraw = 'Withdraw'
+  Withdraw = 'Withdraw',
+  Claim = 'Claim'
 }

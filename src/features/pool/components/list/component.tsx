@@ -72,10 +72,12 @@ export const PoolList: React.FC<Props> = (props: Props) => {
     }
     emitter.on(GlobalEvent.PoolDeposit, handlePoolEvent)
     emitter.on(GlobalEvent.PoolWithdraw, handlePoolEvent)
+    emitter.on(GlobalEvent.PoolClaim, handlePoolEvent)
     return () => {
       logger.info('emitter.off', GlobalEvent.PoolDeposit)()
       emitter.off(GlobalEvent.PoolDeposit, handlePoolEvent)
       emitter.off(GlobalEvent.PoolWithdraw, handlePoolEvent)
+      emitter.off(GlobalEvent.PoolClaim, handlePoolEvent)
     };
   }, [emitter, allPools, commonContext, props.account])
 

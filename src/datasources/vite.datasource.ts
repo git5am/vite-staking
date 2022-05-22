@@ -196,6 +196,8 @@ export class ViteDataSource extends BaseDataSource {
         this._emitter.emitPoolDeposit(Number(vmlog.args.pid), new BigNumber(vmlog.args.amount), vmlog.args.addr);
       } else if (vmlog.event === VmLogEvent.Withdraw && vmlog.args.addr && vmlog.args.pid && vmlog.args.amount) {
         this._emitter.emitPoolWithdraw(Number(vmlog.args.pid), new BigNumber(vmlog.args.amount), vmlog.args.addr);
+      } else if (vmlog.event === VmLogEvent.Claim && vmlog.args.addr && vmlog.args.pid && vmlog.args.amount) {
+        this._emitter.emitPoolClaim(Number(vmlog.args.pid), new BigNumber(vmlog.args.amount), vmlog.args.addr);
       } else {
         logger.info('Unknown vmlog event.', vmlog)();
       }
