@@ -82,6 +82,7 @@ export abstract class BaseDataSource implements IDataSource {
         pool.rewardToken,
         pool.stakingToken
       ].map(token => {
+        if(pool.rewardToken === pool.stakingToken)return new BigNumber(1)
         if(ViteAPIClient.lptokens.includes(token.id))return getViteAPIClient().getLPTokenValue(token.id)
           .then(data => new BigNumber(data?.usd || 0))
         

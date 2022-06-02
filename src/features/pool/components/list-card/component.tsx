@@ -56,7 +56,7 @@ export const PoolListItem: React.FC<Props> = (props: Props) => {
       if(height.isEqualTo(networkManager.networkHeight))return
       height = networkManager.networkHeight
       if (props.pool) {
-        logger.info(`Pool loaded: ${props.pool?.id}`)();
+        logger.info(`Pool loaded: ${props.pool?.id} ${props.pool.stakingToken.name} => ${props.pool.rewardToken.name}`)();
         let timelockOK = true;
         const hasStarted = props.pool.startBlock.isLessThanOrEqualTo(height)
         const hasNotEnded = props.pool.endBlock.isGreaterThanOrEqualTo(height)
