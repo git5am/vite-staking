@@ -13,7 +13,7 @@ export const Hero = () => {
   return (
     <>
       <Box sx={{ mb: 2 }}>
-        <img src={"./cow1.png"} alt="logo" width="100px" />
+        <img src={"./vault1.png"} alt="logo" width="100px" />
       </Box>
       <HeroContent>
         <Container maxWidth="sm">

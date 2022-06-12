@@ -8,7 +8,7 @@ export const Desc: React.FC = () => {
           <Box p={2}>
           <Box>
             <Typography color="text.secondary">
-              <h1>Earn beefy staking rewards with BeefStake!</h1>
+              <h1>Earn beefy staking rewards with VITCStake!</h1>
             </Typography>
             <Typography color="text.secondary">
               <h3>Easily claim free vitamincoin from our&nbsp;
@@ -29,7 +29,7 @@ export const Desc: React.FC = () => {
         </Grid>
         <Grid container xs={12} md={6} lg={6} alignItems="center" justifyContent="center" direction="column">
           <Box p={2}>
-            <img alt="staking" src={"./cow1.png"} width="350" />
+            <img alt="staking" src={"./vault1.png"} width="350" />
           </Box>
         </Grid>     
     </Grid>

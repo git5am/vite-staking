@@ -120,7 +120,7 @@ export class ViteDataSource extends BaseDataSource {
     const promises = [];
     for (let index = 0; index < amount; index++) {
       // skip error vitcwust pool
-      if(index === 17 && this._network?.id === 4)continue
+      // if(index === 17 && this._network?.id === 4)continue
       promises.push((async () => {
         try {
           const pool = await this.getPoolAsync(index, _account);

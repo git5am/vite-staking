@@ -1,6 +1,6 @@
 {
-  "name": "beefstake",
-  "version": "0.0.2",
+  "name": "vitcstake",
+  "version": "0.0.3",
   "private": true,
   "dependencies": {
     "@apollo/client": "^3.4.16",

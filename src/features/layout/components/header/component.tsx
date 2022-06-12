@@ -65,11 +65,11 @@ export const Header: React.FC = (props: any) => {
     <Root>
       <AppBar position="static" color="primary">
         <Toolbar>
-          <img src={"./cow1.png"} alt="logo" width="60" />
+          <img src={"./vault1.png"} alt="logo" width="60" />
           <TitleTypography variant="h6">
             {CommonConstants.APP_NAME}
             <TitleTypography sx={{ fontSize: 11 }}>
-              By Hexa
+              By VitaminCoin
             </TitleTypography>
           </TitleTypography>
             <IconButton sx={{ ml: 1 }} onClick={() => handleDarkMode()} color="inherit">

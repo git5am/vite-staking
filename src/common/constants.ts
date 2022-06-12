@@ -1,7 +1,7 @@
 import { GenericType, Network, PoolFilterValues, PoolSortType, Token } from "../util/types"
 
 export const CommonConstants = {
-  APP_NAME: 'BeefStake',
+  APP_NAME: 'VITCStake',
   WEB_WALLET_STORAGE_SPACE: 'VSP_WEB_WALLET',
   SESSION_WALLET_STORAGE_SPACE: 'VSP_SESSION_WALLET',
   VITE_TOKEN_ID: 'tti_5649544520544f4b454e6e40',
@@ -36,7 +36,7 @@ export const Networks: Network[] = [
   {
     id: 3,
     networkId: 3,
-    name: 'BeefStake v0.1',
+    name: 'VITCStake v0.1',
     rpcUrl: CommonConstants.nodes.mainnet,
     connectorUrl: CommonConstants.VITECONNECT_URL,
     contractAddress: "vite_cc2d0c2c34ae6af8bd58e111ca8c958d002c2b3199f449c8d7",
@@ -45,7 +45,7 @@ export const Networks: Network[] = [
   {
     id: 4,
     networkId: 3,
-    name: 'BeefStake v0.2',
+    name: 'VITCStake v0.2',
     rpcUrl: CommonConstants.nodes.mainnet,
     connectorUrl: CommonConstants.VITECONNECT_URL,
     contractAddress: "vite_c85b335e221fc99631785f3d579edd1b7a2691131b7f3998a3",
